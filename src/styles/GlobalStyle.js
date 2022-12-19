@@ -49,5 +49,6 @@ table {
 	box-sizing: border-box;
 	font-family: 'Lexend Deca', sans-serif;
 }
+
 `
 export default GlobalStyle

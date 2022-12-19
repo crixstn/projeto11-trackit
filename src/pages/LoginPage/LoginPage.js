@@ -1,30 +1,38 @@
-import { LoginLayout, LinkStyle, Button } from "./style";
 import Logo from "../../components/Logo";
+import { LoginLayout, LinkStyle, Button } from "./style";
 import {Input, ContainerLogin} from "../../components/Input";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { UrlApi } from "../../Constants/Url";
-import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import { UrlApi } from "../../Constants/Url";
+import UserContext from "../../components/UserContext";
 
-export default function LoginPage({ setToken }){
+import {useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import axios from "axios";
+
+export default function LoginPage(){
+    const {setUserDatas} = useContext(UserContext)
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     function login(e) {
         e.preventDefault()
         setLoading(true)
+
         const body = { email, password }
 
         const promise = axios.post(`${UrlApi}/auth/login`, body)
+
         promise.then((res) => {
-            setToken(res.data.token)
+            setUserDatas(res.data)
+            localStorage.setItem("trackit", JSON.stringify({...res.data, body}))
             setLoading(false)
-            /*navigate("/habitos")*/
-            console.log("deu certo!")
+            navigate("/habitos")
         })
+
         promise.catch((err) => {
             alert(err.response.data.message);
             setLoading(false);
@@ -45,6 +53,7 @@ export default function LoginPage({ setToken }){
                         disabled={loading}
                         required
                     />
+                    
                     <Input
                         type="password"
                         placeholder="Senha"
@@ -53,6 +62,7 @@ export default function LoginPage({ setToken }){
                         disabled={loading}
                         required
                     />
+
                     {loading ? (
                         <Button>
                             <ThreeDots color="#FFFFFF" />
@@ -61,7 +71,9 @@ export default function LoginPage({ setToken }){
                     }
                 </form>
             </ContainerLogin>
+
             <LinkStyle to="/cadastro">Não possui uma conta? Cadastre-se</LinkStyle>
+
         </LoginLayout>
     )
 }

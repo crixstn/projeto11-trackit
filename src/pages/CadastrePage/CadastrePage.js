@@ -1,8 +1,9 @@
 import Logo from "../../components/Logo";
 import { CadastreLayout, Button, LinkStyle} from "./style";
 import {Input, ContainerLogin} from "../../components/Input"
-import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { UrlApi } from "../../Constants/Url";
 import axios from "axios";
@@ -28,11 +29,13 @@ export default function CadastrePage(){
         }
 
         const promise = axios.post (`${UrlApi}/auth/sign-up`, body)
+
         promise.then( res => {
             alert("Cadastro realizado!")
             navigate("/")
             setLoading(false)
         })
+
         promise.catch((err) => {
             alert(err.response.data.message);
             setLoading(false);
@@ -53,6 +56,7 @@ export default function CadastrePage(){
                         disabled={loading}
                         required
                     />
+
                      <Input
                         type="password"
                         placeholder="Senha"
@@ -61,6 +65,7 @@ export default function CadastrePage(){
                         disabled={loading}
                         required
                     />
+
                     <Input
                         type="text"
                         placeholder="Nome"
@@ -83,11 +88,12 @@ export default function CadastrePage(){
                             <ThreeDots color="#FFFFFF" />
                         </Button> ) : 
                     ( <Button type="submit">Cadastrar</Button> )
-                    }
-
+                    } 
                 </form>
             </ContainerLogin>
+
             <LinkStyle to="/">Já tem uma conta? Faça login!</LinkStyle>
+            
         </CadastreLayout>
     )
 }
