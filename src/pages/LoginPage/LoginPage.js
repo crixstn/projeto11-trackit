@@ -3,14 +3,16 @@ import { LoginLayout, LinkStyle, Button } from "./style";
 import {Input, ContainerLogin} from "../../components/Input";
 import { ThreeDots } from "react-loader-spinner";
 import { UrlApi } from "../../Constants/Url";
-import UserContext from "../../components/UserContext";
+import UserContext from "../../contexts/UserContext";
 
 import {useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
+import AuthContext from "../../contexts/AuthContext";
 
 export default function LoginPage(){
     const {setUserDatas} = useContext(UserContext)
+    const {setToken} = useContext(AuthContext)
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -28,6 +30,7 @@ export default function LoginPage(){
 
         promise.then((res) => {
             setUserDatas(res.data)
+            setToken(res.data.token)
             localStorage.setItem("trackit", JSON.stringify({...res.data, body}))
             setLoading(false)
             navigate("/habitos")

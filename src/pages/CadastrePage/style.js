@@ -6,6 +6,7 @@ export const CadastreLayout = styled.div`
     width: 100%;
     flex-direction: column;
     align-items: center;
+    font-family: 'Lexend Deca';
 `
 export const Button = styled.button`
     display: flex;

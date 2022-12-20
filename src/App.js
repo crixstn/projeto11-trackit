@@ -4,23 +4,30 @@ import CadastrePage from "./pages/CadastrePage/CadastrePage"
 import HabitsPage from "./pages/HabitsPage/HabitsPage";
 
 import { useState, useEffect } from "react";
-import UserContext from "./components/UserContext";
+import UserContext from "./contexts/UserContext";
+import AuthContext from "./contexts/AuthContext";
 
 export default function App() {
   const [userDatas, setUserDatas] = useState("")
+  const [token, setToken] = useState("")
+
+  useEffect(() => {
+    const datas = JSON.parse(localStorage.getItem("trackit"));
+    setUserDatas(datas);
+  },[]);
 
   return (
-    <BrowserRouter>
+    <AuthContext.Provider value={{token, setToken}}>
       <UserContext.Provider value={{userDatas, setUserDatas}}>
-
-        <Routes>
-        <Route path="/" element={<LoginPage/>}/>
-        <Route path="/cadastro" element={<CadastrePage/>}/>
-        <Route path="/habitos" element={<HabitsPage/>}/>
-        </Routes>
-
-        </UserContext.Provider>
-    </BrowserRouter>
+        <BrowserRouter>
+            <Routes>
+            <Route path="/" element={<LoginPage/>}/>
+            <Route path="/cadastro" element={<CadastrePage/>}/>
+            <Route path="/habitos" element={<HabitsPage/>}/>
+            </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+   </AuthContext.Provider>
   );
 }
 

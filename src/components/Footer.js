@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css"
-import UserContext from "./UserContext";
+import UserContext from "../contexts/UserContext";
 
 export default function Footer(){
     const {userDatas, setUserDatas} = useContext(UserContext);
@@ -60,6 +60,7 @@ const FooterLayout = styled.div`
     background: #FFFFFF;
 
     font-size: 18px;
+    font-family: 'Lexend Deca';
     
 `
 const LinkStyle = styled(Link)`

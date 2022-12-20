@@ -6,6 +6,7 @@ export const LoginLayout = styled.div`
     width: 100%;
     flex-direction: column;
     align-items: center;
+    font-family: 'Lexend Deca';
 `
 
 export const LinkStyle = styled(Link)`
